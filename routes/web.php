@@ -34,7 +34,24 @@ Route::prefix('admin')->group(function(){
             });
 
         });
+
         Route::resource('users', 'UsersController');
+
+        //ADMINISTRACAO DE ESTUDANTES
+        Route::group(['prefix' => 'class_information/{class_information}', 'as' => 'class_information.'],function(){
+            Route::resource('/students', 'ClassStudentsController', ['only' => ['index', 'store', 'destroy']]);
+        });
+//        Route::resource('class_informations', 'ClassInformationController');
+    });
+
+    Route::group([
+        'namespace' => 'Api\\',
+        'as' => 'admin.api.',
+         'middleware' => ['auth','can:admin'],
+        'prefix' => 'api'
+    ], function(){
+        Route::name('students.index')->get('students', 'StudentsController@index');
+        //Route::name('subjects.index')->get('subjects', 'SubjectsController@index');
     });
 
     Route::group([
@@ -58,16 +75,6 @@ Route::prefix('admin')->group(function(){
         Route::post('turma/atualizar/{id}', ['as' => 'turma.atualizar', 'uses' => 'ClassInformationController@atualizar']);
         Route::get('turma/ver/{id}', ['as' => 'turma.ver', 'uses' => 'ClassInformationController@verTurma']);
         Route::get('turma/excluir/{id}', ['as' => 'turma.excluir', 'uses' => 'ClassInformationController@excluir']);
-    });
-
-    //ADMINISTRACAO DE ESTUDANTES
-    Route::group([
-        'namespace' => 'Admin\\',
-        'as' => 'class_information.'
-    ], function(){
-        Route::get('student/index', ['as' => 'student.index', 'uses' => 'ClassStudentsController@index']);
-        Route::get('student/criar', ['as' => 'student.criar', 'uses' => 'ClassStudentsController@criar']);
-        Route::get('student/excluir/{id}', ['as' => 'student.excluir', 'uses' => 'ClassStudentsController@excluir']);
     });
 
 });

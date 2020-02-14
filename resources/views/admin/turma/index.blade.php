@@ -36,7 +36,7 @@
                         <td style="text-align:center;">
                             <a href="{{ route('admin.turma.editar', $dado->id) }}" class="btn btn-primary">Editar</a>
                             <a href="{{ route('admin.turma.ver', $dado->id) }}" class="btn btn-secondary">Ver</a>
-                            <a href="{{ route('class_information.student.index', $dado->id) }}" class="btn btn-warning">Alunos</a>
+                            <a href="{{ route('admin.class_information.students.index', $dado->id) }}" class="btn btn-warning">Alunos</a>
                         </td>
                     </tr>
                 @endforeach
